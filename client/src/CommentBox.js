@@ -2,57 +2,67 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './CommentBox.css';
 import Comment from './Comment';
+import CommentForm from './CommentForm';
 
 export default class CommentBox extends Component {
 	
 	constructor() {
 		super();
 		this.state = {
-				showComments: false
+				showComments: false,
+				comments: [{author: "Big Guy", body: "I am a big guy!"}, {author: "Little Guy", body: "I don't like the big guy!"}, {author: "Steve Harvey", body: "I am a rich guy!"}]
 		};
 	}
 	
 	render() {
 		
-	let comments;  
-		  
+	let commentDisplay;	
+	let comments = this._getComments();
 	let buttonText = "Show Comments"; 
-	if (this.state.showComments) {
-		comments = this._getComments();  
+	if (this.state.showComments) { 
+		commentDisplay = comments;
 		buttonText = "Hide Comments";
 	}
 	
     return (
     	<div className="CommentBox">
-    		<h4 className="CommentBox-header">{this._getCommentsTitle(comments)}</h4>
+    		<CommentForm addComment={this._addComment.bind(this)} />
+    		<h4 className="CommentBox-header">{this._getCommentsTitle(comments.length)}</h4>
     		<button onClick={this._handleClick.bind(this)}>{buttonText}</button>
     	
     		<div >
-    			{comments}
+    			{commentDisplay}
     			</div>
 		</div>
     );
   }
   
   _getComments() {
-	  const data = [{author: "Big Guy", body: "I am a big guy!"}, {author: "Little Guy", body: "I don't like the big guy!"}, {author: "Steve Harvey", body: "I am a rich guy!"}]
-	  
-	  return data.map(d => {
+	  return this.state.comments.map(d => {
 		return (<Comment body={d.body} author={d.author} />);  
 	  });
   }
   
   _getCommentsTitle(l) {
-	if (!l || l.length === 0) {
+	if (l === 0) {
 		return "No Comments";
-	} else if (l.length === 1) {
+	} else if (l === 1) {
 		return "1 Comment";
 	} else { 
-		return `${l.length} Comments`;
+		return `${l} Comments`;
   	}	  
   }
   
   _handleClick() {
 	  this.setState({showComments: !this.state.showComments});
+  }
+  
+  _addComment(author, body) {
+	  const comment = {
+	     id: this.state.comments.length + 1,
+	     author: author,
+	     body: body
+	  };
+	  this.setState({comments: this.state.comments.concat([comment])});
   }
 }

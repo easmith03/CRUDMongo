@@ -145,7 +145,7 @@ router.put('/:personId', function(req, res) {
 			return;
 		}
 		
-		db.collection("people").updateOne({_id: ObjectID(req.params.personId)}, req.body, function(err, obj) {
+		db.collection("people").update({_id: ObjectID(req.params.personId)}, req.body, function(err, obj) {
 			if (err) {
 				res.status(400);
 				res.send(err);

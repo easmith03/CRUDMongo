@@ -2,23 +2,58 @@ import React, { Component } from 'react';
 import './ThingList.css';
 
 class ThingList extends Component {
+    
+    constructor() {
+        super();
+        this.state = {
+            things: []
+        };
+    }
+
+    
    render() {
-      return (
+       
+       let thingsDisplayList = this._getThingsDisplayList();
+   
+       return (
     	  <div className="main" id="main">
-			<h2>Welcome to CRUD</h2>
+			<h2>Crud List of Things</h2>
             	<hr/>
-
-    	  This sidebar is as tall as its content (the links), and is always shown.
-
-    	  Scroll this window to see the "fixed" effect.
-
-    	  Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.
-
-    	  Some text to enable scrolling.. Lorem ipsum dolor sit amet, illum definitiones no quo, maluisset concludaturque et eum, altera fabulas ut quo. Atqui causae gloriatur ius te, id agam omnis evertitur eum. Affert laboramus repudiandae nec et. Inciderint efficiantur his ad. Eum no molestiae voluptatibus.
-    	  </div>
+               {thingsDisplayList}
+            	
+          </div>
       );
    }
    
+   componentDidMount() {
+       console.log("component did mount");
+       let thingComponent = this;
+       fetch("http://localhost:3000/thing", {
+           cache: 'default',
+           method: 'GET'
+       })
+       .then(function (response) {
+           console.log(response);
+           return response.json();
+       })
+      .then(function (data) {
+          console.log("Get List arrary response:", data);
+          thingComponent.setState({things: data});
+          return data;
+       });
+
+   }
+   
+   _getThingsDisplayList() {
+       return this.state.things.map(d => {
+         return (<div> <button onClick={this._handleDelete.bind(this, d._id)}>Delete</button> -: {d.title} - {d.field1} - {d.field2} - {d.message} </div>);  
+       });
+   }
+
+   _handleDelete(bId) {
+       console.log("Delete1", bId);
+       //TODO: Mongo delete
+   }
 
 }
 export default ThingList;

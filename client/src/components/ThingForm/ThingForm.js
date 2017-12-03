@@ -33,10 +33,11 @@ class ThingForm extends Component {
     	  </div>
       );
    }
+    
    
-   _handleSubmit(event) {
-       event.preventDefault();
-       const thing = {
+    _handleSubmit(event) {
+        event.preventDefault();
+        const thing = {
                title: this._title.value,
                field1: this._field1.value, 
                field2: this._field2.value,
@@ -58,7 +59,6 @@ class ThingForm extends Component {
        })
        .then(function (response) {
            console.log(response);
-           alert("Saved: ", response.status);
            return response.json();
        })
       .then(function (data) {
@@ -67,7 +67,6 @@ class ThingForm extends Component {
        });
 
    }
-   
 
 }
 export default ThingForm;

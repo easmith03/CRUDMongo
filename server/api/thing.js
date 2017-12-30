@@ -1,39 +1,29 @@
-// message.js - Message route module
+// thing.js - Thing endpoints
 
 const express = require('express');
+const dbService = require('./mongo-service');
 const router = express.Router();
-const mongo = require('mongodb');
-const ObjectID = require('mongodb').ObjectID;
 
-const MongoClient = require('mongodb').MongoClient;
-const url = "mongodb://localhost:27017/mydb";
 
+function successCallback(res, result) {
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200);
+    res.json(result);   
+}
+
+function errorCallback(res, err) {
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200);
+    res.send(err);   
+}
 
 // Get all
 router.get('/', function(req, res) {
-	//console.log('REQ Message:', req.query.msg);
-	res.setHeader('Content-Type', 'application/json');
+    
+    dbService.findAll(successCallback.bind(this, res), errorCallback.bind(this, res));
 
-	MongoClient.connect(url, function(err, db) {
-		if (err) {
-			res.status(400);
-			res.send(err);
-			return;
-		}
-  
-		db.collection("thing").find({}).toArray(function(err, result) {
-			if (err) {
-				res.status(400);
-				res.send(err);
-				return;
-			}
-			res.status(200);
-			res.send(JSON.stringify(result));
-			console.log(result);
-			db.close();
-		});
-	});
 });
+
 
 //Get by id
 router.get('/:personId', function(req, res) {
@@ -46,7 +36,10 @@ router.get('/:personId', function(req, res) {
 			res.send(err);
 			return;
 		}
-		db.collection("people").findOne(ObjectID(req.params.personId), function(err, result) {
+		
+		let dbase = db.db("mydb");
+
+		dbase.collection("people").findOne(ObjectID(req.params.personId), function(err, result) {
 			if (err) {
 				res.status(400);
 				res.send(err);
@@ -75,7 +68,9 @@ router.post('/', function(req, res) {
 			return;
 		}
 		
-		db.collection("thing").insertOne(req.body, function(err, response) {
+		let dbase = db.db("mydb");
+
+		dbase.collection("thing").insertOne(req.body, function(err, response) {
 			if (err) {
 				res.status(400);
 				res.send(err);

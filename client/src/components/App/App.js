@@ -4,6 +4,7 @@ import Home from '../Home/Home';
 import Login from '../Login/Login';
 import ThingForm from '../ThingForm/ThingForm';
 import ThingList from '../ThingList/ThingList';
+import ThingDetail from '../ThingDetail/ThingDetail';
 import './App.css';
 
 class App extends Component {
@@ -25,6 +26,7 @@ class App extends Component {
     	            	<Route exact path='/' component={Home} />
     	                <Route exact path='/Login' component={Login} />
                         <Route exact path='/ThingList' component={ThingList} />
+                        <Route exact path='/Thing/:id' component={ThingDetail} />
                         <Route exact path='/ThingForm' component={ThingForm} />
     	            </Switch>
     	       	</div>

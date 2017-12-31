@@ -1,53 +1,83 @@
-//
+//Mongo CRUD functions
 const mongo = require('mongodb');
 const ObjectID = require('mongodb').ObjectID;
 const MongoClient = require('mongodb').MongoClient;
 const url = "mongodb://localhost:27017/mydb";
+let dbConnection;
+let dbase;
 
-
-module.exports.findAll = function (successCallback, errorCallback) {
+module.exports.init = function () {
     
-	MongoClient.connect(url, function(err, db) {
-		if (err) {
-			errorCallback(err);
-			return;
-		}
-  
-		let dbase = db.db("mydb")
-		dbase.collection("thing").find({}).toArray(function(err, result) {
-			if (err) {
-				errorCallback(err);
-				return;
-			}
-			successCallback(result);
-			db.close();
-		});
-	});
+    return MongoClient.connect(url)
+    .then((db) => {
+        console.log("DB Connection");
+        dbase = db.db("mydb");
+        dbConnection = db;
+        return true;
+    })
+    .catch((err) => {
+        console.log("DB Connection error", err);
+        throw err;
+    });
+
 }
 
-function findById(id) {
-	
-	MongoClient.connect(url, function(err, db) {
-		if (err) {
-			res.status(400);
-			res.send(err);
-			return;
-		}
-		
-		let dbase = db.db("mydb");
+module.exports.close = function () {
+    return dbConnection.close();
+}
 
-		dbase.collection("people").findOne(ObjectID(id), function(err, result) {
-			if (err) {
-				res.status(400);
-				res.send(err);
-				return;
-			}
-			res.status(200);
-			res.send(result);
-			console.log(result);
-			db.close();
-		});
-	});
+
+//module.exports.findAll = function (successCallback, errorCallback) {
+module.exports.findAll = function () {
+    
+//	MongoClient.connect(url, function(err, db) {
+//		if (err) {
+//			errorCallback(err);
+//			return;
+//		}
+//  
+//		let dbase = db.db("mydb")
+//		dbase.collection("thing").find({}).toArray(function(err, result) {
+//			if (err) {
+//				errorCallback(err);
+//				return;
+//			}
+//			successCallback(result);
+//			db.close();
+//		});
+//	});
+
+//    MongoClient.connect(url)
+//    .then(function(db) {
+//        let dbase = db.db("mydb")
+//        dbase.collection("thing").find({}).toArray()
+//        .then((result) => successCallback(result))
+//        .then(() => db.close())
+//        .catch((err) => errorCallback(err));    
+//    })
+//    .catch((err) => errorCallback(err));
+
+   return dbase.collection("thing").find({}).toArray();    
+ 
+}
+
+module.exports.findOne = function (id, successCallback, errorCallback) { 
+   
+//    MongoClient.connect(url)
+//    .then(function(db) {
+//        let dbase = db.db("mydb");
+//        dbase.collection("thing").findOne(ObjectID(id))   
+//        .then((result) => successCallback(result))
+//        .then(() => db.close())
+//        .catch((err) => errorCallback(err));
+//    })
+//    .catch((err) => errorCallback(err));
+    
+    
+    dbase.collection("thing").findOne(ObjectID(id))   
+    .then((result) => successCallback(result))
+    .catch((err) => errorCallback(err));
+  
 }
 
 function insertOne(document) {
@@ -76,7 +106,7 @@ function insertOne(document) {
 	});
 }
 
-function insertOne(id) {
+function deleteOne(id) {
 	
 	MongoClient.connect(url, function(err, db) {
 		if (err) {

@@ -13,44 +13,24 @@ function successCallback(res, result) {
 
 function errorCallback(res, err) {
     res.setHeader('Content-Type', 'application/json');
-    res.status(200);
+    res.status(400);
     res.send(err);   
 }
 
 // Get all
 router.get('/', function(req, res) {
     
-    dbService.findAll(successCallback.bind(this, res), errorCallback.bind(this, res));
+    //dbService.findAll(successCallback.bind(this, res), errorCallback.bind(this, res));
+    dbService.findAll()
+    .then((result) => successCallback(res, result))
+    .catch((err) => errorCallback(res, err));
 
 });
 
 
 //Get by id
 router.get('/:personId', function(req, res) {
-	//console.log('REQ Message:', req.query.msg);
-	res.setHeader('Content-Type', 'application/json');
-	
-	MongoClient.connect(url, function(err, db) {
-		if (err) {
-			res.status(400);
-			res.send(err);
-			return;
-		}
-		
-		let dbase = db.db("mydb");
-
-		dbase.collection("people").findOne(ObjectID(req.params.personId), function(err, result) {
-			if (err) {
-				res.status(400);
-				res.send(err);
-				return;
-			}
-			res.status(200);
-			res.send(result);
-			console.log(result);
-			db.close();
-		});
-	});
+    dbService.findOne(req.params.personId, successCallback.bind(this, res), errorCallback.bind(this, res));
 });
 
 //Post insert new

@@ -1,41 +1,28 @@
-.App {
-  text-align: center;
+.rTable {
+  	display: table;
+  	width: 70%;
 }
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.rTableRow {
+  	display: table-row;
 }
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+.rTableCell, .rTableHead {
+  	display: table-cell;
+  	padding: 3px 10px;
+  	border: 1px solid #999999;
 }
-
-.App-title {
-  font-size: 1.5em;
+.dataCell {
+	width: 90%;	
 }
-
-.App-intro {
-  font-size: large;
+.rTableHeading {
+  	display: table-header-group;
+  	background-color: #ddd;
+  	font-weight: bold;
 }
-
-
-/* Style page content */
-.main {
-    margin-left: 160px; /* Same as the width of the sidebar */
-    padding: 0px 10px;
+.rTableFoot {
+  	display: table-footer-group;
+  	font-weight: bold;
+  	background-color: #ddd;
 }
-
-/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.rTableBody {
+  	display: table-row-group;
 }

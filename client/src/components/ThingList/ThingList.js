@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import './ThingList.css';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+
 
 class ThingList extends Component {
     
@@ -19,12 +21,17 @@ class ThingList extends Component {
     	  <div className="main" id="main">
 			<h2>Crud List of Things</h2>
             	<hr/>
-               {thingsDisplayList}
-            	
+            	   <div className="rTable">
+            	   <div className="rTableRow">
+            	   <div className="rTableHead rTableHeading dataCell"><strong>title</strong></div>
+            	   <div className="rTableHead rTableHeading">&nbsp;</div>
+                   </div>
+              {thingsDisplayList}
+                </div>            	
           </div>
       );
    }
-   
+     
    componentDidMount() {
        console.log("component did mount");
        let thingComponent = this;
@@ -46,7 +53,12 @@ class ThingList extends Component {
    
    _getThingsDisplayList() {
        return this.state.things.map(d => {
-         return (<div> <button onClick={this._handleDelete.bind(this, d._id)}>Delete</button> -: {d.title} - {d.field1} - {d.field2} - {d.message} </div>);  
+         return (<div className="rTableRow">
+                 <div className="rTableCell dataCell">{d.title}</div>
+                 <div className="rTableCell"><Link to={'/thing/' + d._id}>Details</Link></div>
+                 </div>
+         );  
+         //return (<div> <button onClick={this._handleDelete.bind(this, d._id)}>Delete</button> -: {d.title} - {d.field1} - {d.field2} - {d.message} </div>);  
        });
    }
 

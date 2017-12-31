@@ -14,12 +14,12 @@ class App extends Component {
             <Router>
                 <div>   	              
     	            <div className="sidenav">
-    	                <ul>
-    	                    <li><Link to={'/'}>Home</Link></li>
-    	            		<li><Link to={'/Login'}>Login</Link></li>
-    	            		<li><Link to={'/ThingList'}>List of Things</Link></li>
-    	            		<li><Link to={'/ThingForm'}>Add new Thing</Link></li>
-    	            	</ul>
+    	                <div>
+    	                    <div><Link to={'/'}>Home</Link></div>
+    	            		<div><Link to={'/Login'}>Login</Link></div>
+    	            		<div><Link to={'/ThingList'}>List of Things</Link></div>
+    	            		<div><Link to={'/ThingForm'}>Add new Thing</Link></div>
+    	            	</div>
     	          	</div>
     	             	                 
     	            <Switch>

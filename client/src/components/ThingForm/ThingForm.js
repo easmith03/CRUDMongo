@@ -9,32 +9,22 @@ class ThingForm extends Component {
             <hr/>
 
             <form className="thing-form" onSubmit={this._handleSubmit.bind(this)}>
-                <label>Add a new Thing</label>
-                <div className="thing-form-fields">
-                    <div>
-                        <input placeholder="Title" ref={(input) => this._title = input} />
-                    </div>
-                        <div>
-                        <input placeholder="Field1" ref={(input) => this._field1 = input} />
-                    </div>
-                        <div>
-                        <input placeholder="Field2" ref={(input) => this._field2 = input} />
-                    </div>
-                    <div>
-                        <textarea placeholder="Message:" ref={(textarea) => this._message = textarea}></textarea>  
-                    </div>
-                </div>
-                <div className="thing-form-actions">
-                    <button type="submit">
-                        Save Thing
-                    </button>
+                <div className="thingForm">
+                        <label for="title">Title</label>
+                        <input className="inputText" id="title" placeholder="Title" ref={(input) => this._title = input} />
+                        <label for="field1">Field 1</label>
+                        <input className="inputText" id="field1" placeholder="Field1" ref={(input) => this._field1 = input} />
+                        <label for="field2">Field 1</label>
+                        <input className="inputText" id="field2" placeholder="Field2" ref={(input) => this._field2 = input} />
+                        <label for="message">Field 1</label>
+                        <textarea className="inputText" id="message" placeholder="Message:" ref={(textarea) => this._message = textarea}></textarea>  
+                        <input type="submit" className="inputSubmit" value="Save Thing"/> 
                 </div>
             </form>
     	  </div>
       );
    }
-    
-   
+       
     _handleSubmit(event) {
         event.preventDefault();
         const thing = {

@@ -25,7 +25,11 @@ class ThingDetail extends Component {
                    <div className="rTableHead rTableHeading"></div>
                    </div>
               {thingDisplay}
-                </div>              
+                </div>   
+                
+                <div>
+                <button onClick={this._handleDelete.bind(this, this.props.match.params.id)}>Delete</button>
+                </div>
           </div>
       );
    }
@@ -68,6 +72,23 @@ class ThingDetail extends Component {
            </div></div>
       );  
 
+   }
+
+   _handleDelete(bId) {
+       let component = this;
+       fetch("http://localhost:3000/thing/" + this.props.match.params.id, {
+           cache: 'default',
+           method: 'DELETE'
+       })
+       .then(function (response) {
+           console.log(response);
+           return response.json();
+       })
+      .then(function (data) {
+          console.log("Get delete response:", data);
+          component.props.history.push('/ThingList');
+          return data;
+       });
    }
 
  

@@ -104,26 +104,28 @@ module.exports.insertOne = function (document) {
 //	});
 }
 
-function deleteOne(id) {
+module.exports.deleteOne = function (id) {
 	
-	MongoClient.connect(url, function(err, db) {
-		if (err) {
-			res.status(400);
-			res.send(err);
-			return;
-		}
-		
-		db.collection("customers").deleteOne({_id: ObjectID(id)}, function(err, obj) {
-			if (err) {
-				res.status(400);
-				res.send(err);
-				return;
-			}
-			res.status(200);
-			res.send();
-			db.close();
-		});
-	});
+    return dbase.collection("thing").deleteOne({_id: ObjectID(id)});    
+
+//	MongoClient.connect(url, function(err, db) {
+//		if (err) {
+//			res.status(400);
+//			res.send(err);
+//			return;
+//		}
+//		
+//		db.collection("customers").deleteOne({_id: ObjectID(id)}, function(err, obj) {
+//			if (err) {
+//				res.status(400);
+//				res.send(err);
+//				return;
+//			}
+//			res.status(200);
+//			res.send();
+//			db.close();
+//		});
+//	});
 }
 
 

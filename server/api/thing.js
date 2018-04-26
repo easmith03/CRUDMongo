@@ -75,7 +75,11 @@ router.post('/', function(req, res) {
 
 
 //Delete record
-router.delete('/:personId', function(req, res) {
+router.delete('/:thingId', function(req, res) {
+    dbService.deleteOne(req.params.thingId)
+    .then((result) => successCallback(res, result))
+    .catch((err) => errorCallback(res, err));
+
 //	res.setHeader('Content-Type', 'application/json');
 //	
 //	MongoClient.connect(url, function(err, db) {

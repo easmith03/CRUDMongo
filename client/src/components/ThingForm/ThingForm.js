@@ -14,9 +14,9 @@ class ThingForm extends Component {
                         <input className="inputText" id="title" placeholder="Title" ref={(input) => this._title = input} />
                         <label for="field1">Field 1</label>
                         <input className="inputText" id="field1" placeholder="Field1" ref={(input) => this._field1 = input} />
-                        <label for="field2">Field 1</label>
+                        <label for="field2">Field 2</label>
                         <input className="inputText" id="field2" placeholder="Field2" ref={(input) => this._field2 = input} />
-                        <label for="message">Field 1</label>
+                        <label for="message">Message</label>
                         <textarea className="inputText" id="message" placeholder="Message:" ref={(textarea) => this._message = textarea}></textarea>  
                         <input type="submit" className="inputSubmit" value="Save Thing"/> 
                 </div>
@@ -35,7 +35,7 @@ class ThingForm extends Component {
        };
        
        console.log("save", thing);
-       
+       let component = this;
        
        fetch("http://localhost:3000/thing", {
            //mode: 'cors',
@@ -53,6 +53,9 @@ class ThingForm extends Component {
        })
       .then(function (data) {
           console.log("post response:", data);
+          
+          component.props.history.push('/ThingList');
+         
           return data;
        });
 
